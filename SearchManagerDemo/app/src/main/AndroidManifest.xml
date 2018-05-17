@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.xulin.searchmanagerdemo"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.xulin.searchmanagerdemo.SearchManagerDemoActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!--
+            为了使该Activity都能使用search bar,一定要将这个标签放到该Activity中，
+			里面的value指定的是处理搜索结果的Activity
+                -->
+            </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchResultActivity" />
+        </activity>
+        <!-- 处理搜索结果的Activity -->
+        <activity
+            android:name="SearchResultActivity"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <!-- 指定到/res/xml/searchable.xml文件 -->
+            <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+        </activity>
+        <!--searchable.xml中有一个searchSuggestAuthority的值，
+	其实和这里的authorities指向的都是name中所关联的SearchSuggestionSampleProvider，
+	它是一个SearchRecentSuggestionsProvider的子类-->
+        <provider
+            android:name="SearchSuggestionSampleProvider"
+            android:authorities="com.xulin.searchmanagerdemo.SearchSuggestionSampleProvider" />
+    </application>
+</manifest>
